@@ -34,3 +34,32 @@ models:
     # Config indicated by + and applies to all files under models/example/
     example:
       +materialized: view
+
+seeds:
+  sensorflow_data_platform:  # Replace with your actual project name
+    +schema: main
+    annex1:
+      +column_types:
+        Item Code: varchar
+        Item Name: varchar
+        Category Code: varchar
+        Category Name: varchar
+    annex2:
+      +column_types:
+        Date: varchar
+        Time: varchar
+        Item Code: varchar
+        Quantity Sold (kilo): float
+        Unit Selling Price (RMB/kg): float
+        Sale or Return: varchar
+        Discount (Yes/No): varchar
+    annex3:
+      +column_types:
+        Date: varchar
+        Item Code: varchar
+        Wholesale Price (RMB/kg): float
+    annex4:
+      +column_types:
+        Item Code: varchar
+        Item Name: varchar
+        Loss Rate (%): float

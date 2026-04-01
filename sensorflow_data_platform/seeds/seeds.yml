@@ -1,0 +1,73 @@
+version: 2
+
+seeds:
+  - name: annex1
+    config:
+      column_types:
+        Item Code: VARCHAR
+        Item Name: VARCHAR
+        Category Code: VARCHAR
+        Category Name: VARCHAR
+    columns:
+      - name: Item Code
+        data_type: VARCHAR
+      - name: Item Name
+        data_type: VARCHAR
+      - name: Category Code
+        data_type: VARCHAR
+      - name: Category Name
+        data_type: VARCHAR
+
+  - name: annex2
+    config:
+      column_types:
+        Date: VARCHAR
+        Time: VARCHAR
+        Item Code: VARCHAR
+        Quantity Sold (kilo): FLOAT
+        Unit Selling Price (RMB/kg): FLOAT
+        Sale or Return: VARCHAR
+        Discount (Yes/No): VARCHAR
+    columns:
+      - name: Date
+        data_type: VARCHAR
+      - name: Time
+        data_type: VARCHAR
+      - name: Item Code
+        data_type: VARCHAR
+      - name: Quantity Sold (kilo)
+        data_type: FLOAT
+      - name: Unit Selling Price (RMB/kg)
+        data_type: FLOAT
+      - name: Sale or Return
+        data_type: VARCHAR
+      - name: Discount (Yes/No)
+        data_type: VARCHAR
+
+  - name: annex3
+    config:
+      column_types:
+        Date: VARCHAR
+        Item Code: VARCHAR
+        Wholesale Price (RMB/kg): FLOAT
+    columns:
+      - name: Date
+        data_type: VARCHAR
+      - name: Item Code
+        data_type: VARCHAR
+      - name: Wholesale Price (RMB/kg)
+        data_type: FLOAT
+
+  - name: annex4
+    config:
+      column_types:
+        Item Code: VARCHAR
+        Item Name: VARCHAR
+        Loss Rate (%): FLOAT
+    columns:
+      - name: Item Code
+        data_type: VARCHAR
+      - name: Item Name
+        data_type: VARCHAR
+      - name: Loss Rate (%)
+        data_type: FLOAT
