@@ -1,33 +1,39 @@
 WITH base AS (
   SELECT
-    CAST(
+    TRY_CAST(
       STRPTIME(
-        "Date" || ' ' || 
+        "Date" || ' ' ||
+        LPAD(
+          CAST(CAST(SPLIT_PART("Time", ':', 1) AS INT) % 24 AS VARCHAR),
+          2,
+          '0'
+        )
+        || ':' ||
         CASE 
-          WHEN SPLIT_PART("Time", ':', 1)::INT >= 24 
-            THEN LPAD((SPLIT_PART("Time", ':', 1)::INT - 24)::VARCHAR, 2, '0')
-                 || ':' || SPLIT_PART("Time", ':', 2)
-          ELSE "Time"
+          -- if no seconds → add .0
+          WHEN POSITION('.' IN SPLIT_PART("Time", ':', 2)) = 0 
+            THEN SPLIT_PART("Time", ':', 2) || '.0'
+          ELSE SPLIT_PART("Time", ':', 2)
         END,
         '%m/%d/%Y %H:%M.%S'
-      ) 
+      )
       + CASE 
-          WHEN SPLIT_PART("Time", ':', 1)::INT >= 24 
+          WHEN CAST(SPLIT_PART("Time", ':', 1) AS INT) >= 24 
             THEN INTERVAL 1 DAY
           ELSE INTERVAL 0 DAY
         END
     AS TIMESTAMP) AS transaction_ts,
 
-    CAST("Item Code" AS STRING)                      AS item_code,
-    CAST("Quantity Sold (kilo)" AS DECIMAL(10,3))    AS quantity_sold_kg,
+    CAST("Item Code" AS STRING)                   AS item_code,
+    CAST("Quantity Sold (kilo)" AS DECIMAL(10,3)) AS quantity_sold_kg,
     CAST("Unit Selling Price (RMB/kg)" AS DECIMAL(10,2)) 
-                                                     AS unit_price_rmb_per_kg,
-    LOWER("Sale or Return")                          AS transaction_type,
+                                                  AS unit_price_rmb_per_kg,
+    LOWER("Sale or Return")                       AS transaction_type,
 
     CASE 
       WHEN LOWER("Discount (Yes/No)") = 'yes' THEN TRUE
       ELSE FALSE
-    END                                              AS is_discounted
+    END                                           AS is_discounted
 
   FROM {{ ref('annex2') }}
 )
