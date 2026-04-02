@@ -1,5 +1,3 @@
--- models/stg_sales.sql
-
 WITH base AS (
   SELECT
     CAST(
@@ -21,7 +19,7 @@ WITH base AS (
     AS TIMESTAMP) AS transaction_ts,
 
     CAST("Item Code" AS STRING)                      AS item_code,
-    CAST("Quantity Sold (kilo)" AS DECIMAL(10,3))    AS quantity_kg,
+    CAST("Quantity Sold (kilo)" AS DECIMAL(10,3))    AS quantity_sold_kg,
     CAST("Unit Selling Price (RMB/kg)" AS DECIMAL(10,2)) 
                                                      AS unit_price_rmb_per_kg,
     LOWER("Sale or Return")                          AS transaction_type,
@@ -45,12 +43,9 @@ SELECT
 
   -- other fields
   item_code,
-  quantity_kg,
+  quantity_sold_kg,
   unit_price_rmb_per_kg,
   transaction_type,
-  is_discounted,
-
-  -- derived metric
-  quantity_kg * unit_price_rmb_per_kg       AS revenue
-
+  is_discounted
+  
 FROM base
