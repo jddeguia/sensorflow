@@ -11,7 +11,7 @@ select
     -- coefficient of variation: how unpredictable is daily demand?
     round(
         stddev(total_qty_kg)
-        / nullif(avg(total_qty_kg), 0) * 100
+        / nullif(avg(total_qty_kg), 0) 
     , 1)                                                    as demand_cv_pct
 from {{ ref('mart_fct_sales_daily') }}
 where transaction_type = 'sale'
